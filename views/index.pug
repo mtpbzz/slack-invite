@@ -1,0 +1,45 @@
+doctype html
+html
+  head
+    meta(http-equiv="Content-Type", content="text/html; charset=utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    title #{__('TITLE', community)}
+    link(href="css/style.css", rel="stylesheet", type="text/css")
+    link(href="//fonts.googleapis.com/css?family=Lato:300,400,700,900,700italic|Poppins:700italic,400,600,300,700,800", rel="stylesheet", type="text/css")
+  body
+    .overlay
+    #wrapper
+      .content
+        .header
+          .logo
+            img(src="images/logo.svg")
+            h1 #{community}
+          p.strong Connect immediately with like minded developers based in the Hertfordshire area.
+          p This space is for software developers, entrepreneurs, design agencies, contractors &amp; freelancers across the technical domain.
+        .theform
+          form(method="POST", action="invite")#join-form.form
+            input(type="email", name="email", autofocus, placeholder=__('ENTER_EMAIL'))#slack-email.field
+            if tokenRequired
+              input(type="text", name="token", placeholder=__('ENTER_TOKEN'))#slack-token.field
+            input(type="submit", value="Join today").submit
+  script.
+    var tokenRequired = #{tokenRequired};
+    var form = document.getElementById('join-form');
+    var email = document.getElementById('slack-email');
+    var token = document.getElementById('slack-token');
+    var bgArray=[1,2,3,4,5];
+    var randomBgClass = "bg"+bgArray[Math.floor(Math.random() * bgArray.length)]
+    document.body.classList.add(randomBgClass)
+
+    form.addEventListener('submit', function(evt) {
+      if (!email.value) {
+        evt.preventDefault();
+      }
+      if (tokenRequired && !token.value) {
+        evt.preventDefault();
+      }
+      var recaptcha = document.getElementById('g-recaptcha-response');
+      if (recaptcha && recaptcha.value === '') {
+        evt.preventDefault();
+      }
+    });
